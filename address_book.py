@@ -9,7 +9,6 @@ class Field:
         return str(self.value)
 
 class Name(Field):
-    # реалізація класу
     pass
 
 class Phone(Field):
@@ -68,7 +67,6 @@ class Record:
 
 
 class AddressBook(UserDict):
-    # реалізація класу
     def add_record(self, record):
         self.data[record.name.value] = record
     
@@ -102,45 +100,3 @@ class AddressBook(UserDict):
                     "congratulation_date": congratulation_date.strftime("%d.%m.%Y")
                 })
         return result
-
-
-
-# Створення нової адресної книги
-book = AddressBook()
-
-# Створення запису для John
-john_record = Record("John")
-john_record.add_phone("1234567890")
-john_record.add_phone("5555555555")
-john_record.add_birthday("14.07.1990")
-
-# Додавання запису John до адресної книги
-book.add_record(john_record)
-
-# Створення та додавання нового запису для Jane
-jane_record = Record("Jane")
-jane_record.add_phone("9176543210")
-jane_record.add_birthday("15.07.2020")
-book.add_record(jane_record)
-
-# Виведення всіх записів у книзі
-for name, record in book.data.items():
-    print(record)
-
-# Знаходження та редагування телефону для John
-# john = book.find("John")
-# john.edit_phone("1234567890", "1112223333")
-# print(john)  # Виведення: Contact name: John, phones: 1112223333; 5555555555
-
-# Пошук конкретного телефону у записі John
-# found_phone = john.find_phone("5555555555")
-# print(f"{john.name}: {found_phone}")  # Виведення: 5555555555
-
-# Видалення запису Jane
-# book.delete("Jane")
-# for name, record in book.data.items():
-#     print(record)
-
-print("\nХто має день народження наступного тижня:")
-for item in book.get_upcoming_birthdays():
-    print(item)

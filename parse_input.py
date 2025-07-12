@@ -1,39 +1,48 @@
-from handler_command import add, change, show, all, input_error
+from handler_command import *
+from address_book import *
 
-contact_dictionary = []
+book = AddressBook()
 
 @input_error
 def parse_input(input_command):
-    cmd, *arg = input_command.split()
+    cmd, *args = input_command.split()
     cmd = cmd.lower()
-    contact_name = arg[0].capitalize() if len(arg) > 0 else None
-    contact_phone = arg[1] if len(arg) > 1 else None
+
     if cmd == "hello":
         print("Чим я можу вам допомогти?")
 
     elif cmd == "help":
-        print("Введіть одну з команд: hello, add, change, show, all, exit or close")
+        print("Введіть одну з команд: hello, add, change, phone, all, exit or close")
     
-    elif cmd == "close" or cmd == "exit":
+    elif cmd in ["close", "exit"]:
         print("Ви залишаєте додаток! \nГарного дня!")
         return exit()
 
     elif cmd == "add":
-        add(contact_name, contact_phone, contact_dictionary)
+        add_contact(args, book)
 
     elif cmd == "change":
-        if contact_name != None and contact_phone != None:
-            change(contact_name, contact_phone, contact_dictionary)
+        if args[0].capitalize() != None:
+            change(args, book)
         else:
-            raise ValueError ("Give me name and phone please")
+            raise ValueError ("Введіть ім'я")
     
-    elif cmd == "show":
-        show(contact_name, contact_dictionary)
+    elif cmd == "phone":
+        phone(args, book)
     
     elif cmd == "all":
-        all(contact_dictionary)
+        all(book)
+
+    elif cmd == "add-birthday":
+        add_birthday(args, book)
+
+    elif cmd == "show-birthday":
+        show_birthday(args, book)
+
+    elif cmd == "birthdays":
+        birthdays(book)
 
     else:
-        raise ValueError("Command not found! Try one of these: hello, add, change, show, all, exit or close")
+        raise ValueError("Такої команди не знайдено! \nВведіть одну з наступних команд: \nhello, help, add, change, phone, add-birthday, show-birthday, birthdays, all, exit or close")
 
-    return contact_dictionary
+    return book
